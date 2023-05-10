@@ -23,6 +23,7 @@ export default class Admin extends Component {
   }
 
   render() {
+    console.log(EASY_ENV_IS_NODE);
     if (EASY_ENV_IS_NODE) {
       const store = create(this.props);
       const { prefix, url } = store.getState();

@@ -17,4 +17,3 @@ config/manifest.json
 app/view/*
 !app/view/layout.html
 !app/view/.gitkeep
-package-lock.json
