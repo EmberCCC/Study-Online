@@ -34,14 +34,14 @@ npm install easywebpack-cli -g
 #### 安装依赖
 
 ```bash
-npm install
+yarn
 ```
 
 
 #### 本地开发启动应用
 
 ```bash
-npm run dev
+yarn dev
 ```
 
 应用访问: http://127.0.0.1:7001
