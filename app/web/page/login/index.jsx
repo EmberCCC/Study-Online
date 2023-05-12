@@ -4,6 +4,7 @@ import './index.css';
 export default class ListIndex extends Component {
   componentDidMount() {
     console.log('----componentDidMount-----');
+    console.log(this.props.name);
   }
 
   render() {
