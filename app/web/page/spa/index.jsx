@@ -1,51 +1,13 @@
-import React, { Component } from 'react';
-import { Provider } from 'react-redux';
-import { BrowserRouter, StaticRouter } from 'react-router-dom';
-import Layout from 'component/layout'
-import { create } from 'component/article/store';
-import Route from 'component/article/router';
+import React from 'react';
 
 import './index.css';
+import Router from '../../route';
+import { BrowserRouter } from 'react-router-dom';
 
-export default class Admin extends Component {
-  state = {
-    collapsed: false
-  };
-
-  toggle = () => {
-    this.setState({
-      collapsed: !this.state.collapsed
-    });
-  }
-
-  onEnter = () => {
-    console.log('>>test');
-  }
-
-  render() {
-    console.log(EASY_ENV_IS_NODE);
-    if (EASY_ENV_IS_NODE) {
-      const store = create(this.props);
-      const { prefix, url } = store.getState();
-      return (
-        <Layout>
-          <Provider store={ store }>
-            <StaticRouter location={ url }>
-              <Route prefix = {prefix} />
-            </StaticRouter>
-          </Provider>
-        </Layout>
-      );
-    }
-    const store = create(window.__INITIAL_STATE__);
-    const { prefix, url } = store.getState();
-    console.log('>>client prefix', prefix, url);
-    return (
-      <Provider store={ store }>
-        <BrowserRouter location={ url }>
-          <Route prefix = {prefix} url={ url }  />
-        </BrowserRouter>
-      </Provider>
-    );
-  }
+export default function Admin(props) {
+  return (
+    <BrowserRouter>
+      <Router />
+    </BrowserRouter>
+  );
 }

@@ -3,7 +3,7 @@ module.exports = app => {
   return class AdminController extends app.Controller {
     async login() {
       const { ctx } = this;
-      await ctx.renderClient('login.js', {});
+      await ctx.renderClient('login.js', {name:123});
     }
 
     async home(ctx) {

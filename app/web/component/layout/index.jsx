@@ -1,32 +1,86 @@
-import React, { Component } from 'react';
-import inlineTest from 'raw-loader!../inline.js';
-export default class Layout extends Component {
-  
-  render() {
-    const inlineCode = `
-      function inlineCodeTest() {
-        console.log('Egg React inline Code javascript');
-        var name = 'Egg React';
-        var title = 'Server Side Render';
-        return name + '-' + title;
-      }
-    `;
-    if(EASY_ENV_IS_NODE) {
-      return <html>
-        <head>
-          <title>{this.props.title}</title>
-          <meta charSet="utf-8"></meta>
-          <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui"></meta>
-          <meta name="keywords" content={this.props.keywords}></meta>
-          <meta name="description" content={this.props.description}></meta>
-          <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon"></link>
-          <script dangerouslySetInnerHTML={{__html: inlineCode }}></script>
-          <script dangerouslySetInnerHTML={{__html: inlineTest }}></script>
-          <script>inlineFileTest();inlineCodeTest();</script>
-        </head>
-        <body><div id="app">{this.props.children}</div></body>
-      </html>;
-    }
-    return this.props.children;
+import {  Layout, Menu, theme } from 'antd';
+import React from 'react';
+import { Outlet, useLocation, useNavigate } from 'react-router';
+import IndexHeader from './Header'
+const { Header, Content, Sider } = Layout;
+
+const menu = [
+  {
+    key: '/',
+    // icon: React.createElement(icon),
+    label: 'User'
+  },
+  {
+    key: '/book',
+    // icon: React.createElement(icon),
+    label: 'Book'
+  },
+  {
+    key: '/class',
+    // icon: React.createElement(icon),
+    label: 'Class'
+  },
+  {
+    key: '/logout',
+    // icon: React.createElement(icon),
+    label: 'Logout'
   }
-}
+]
+
+const Index = () => {
+  const {
+    token: { colorBgContainer }
+  } = theme.useToken();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const handleClick = (item) => {
+    navigate(item.key)
+  }
+  return (
+    <Layout className='h-[100vh]'>
+      <Header
+        style={{
+          display: 'flex',
+          alignItems: 'center'
+        }}
+      >
+        <div className="demo-logo" />
+        <IndexHeader />
+      </Header>
+      <Layout>
+        <Sider
+          width={200}
+          style={{
+            background: colorBgContainer
+          }}
+        >
+          <Menu
+            mode="inline"
+            selectedKeys={location.pathname}
+            style={{
+              height: '100%',
+              borderRight: 0
+            }}
+            onClick={handleClick}
+            items={menu}
+          />
+        </Sider>
+        <Layout
+          className='p-10'
+        >
+          <Content
+            style={{
+              padding: 24,
+              margin: 0,
+              minHeight: 280,
+              background: colorBgContainer
+            }}
+          >
+            <Outlet />
+          </Content>
+        </Layout>
+      </Layout>
+    </Layout>
+  );
+};
+export default Index;
