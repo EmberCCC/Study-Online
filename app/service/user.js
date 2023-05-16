@@ -4,8 +4,8 @@ const crypto = require('crypto');
 class UserService extends Service {
 
     async login(username, password) {
-        const { ctx } = this;
-        const user = await ctx.db.queryOne('select * from user where username = ?', [username]);
+        const { app, ctx } = this;
+        const user = await app.mysql.get('user', { "username": username });
         if (!user) {
             return {
                 success: false,

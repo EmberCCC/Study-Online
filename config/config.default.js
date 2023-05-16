@@ -15,9 +15,9 @@ module.exports = app => {
     // 单数据库信息配置
     client: {
       // host
-      host: 'localhost',
+      host: '192.168.123.112',
       // 端口号
-      port: '3306',
+      port: '3307',
       // 用户名
       user: 'root',
       // 密码
@@ -62,6 +62,12 @@ module.exports = app => {
   config.reactssr = {
     layout: path.join(app.baseDir, 'app/web/view/layout.html')
   };
+  config.security = {
+    csrf: {
+      enable: false,
+    },
+  };
+
 
   return config;
 };
