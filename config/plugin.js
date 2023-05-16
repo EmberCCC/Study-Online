@@ -1,4 +1,5 @@
 exports.static = true;
+exports.session = true;
 
 exports.reactssr = {
   enable: true,

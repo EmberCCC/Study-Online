@@ -1,39 +1,47 @@
 const path = require('path');
 const fs = require('fs');
 module.exports = app => {
-  const exports = {};
+  const config = {};
 
-  exports.siteFile = {
+  config.session = {
+    key: 'EGG_SESS',
+    maxAge: 24 * 3600 * 1000, // 1 天
+    httpOnly: true,
+    encrypt: true,
+    renew: true
+  }
+
+  config.siteFile = {
     '/favicon.ico': fs.readFileSync(path.join(app.baseDir, 'app/web/asset/images/favicon.ico'))
   };
 
-  exports.logger = {
+  config.logger = {
     consoleLevel: 'DEBUG',
     dir: path.join(app.baseDir, 'logs')
   };
 
-  exports.static = {
+  config.static = {
     prefix: '/public/',
     dir: path.join(app.baseDir, 'public')
   };
 
-  exports.keys = '123456';
+  config.keys = '123456';
 
-  exports.middleware = [
+  config.middleware = [
     'locals',
     'access'
   ];
 
-  exports.view = {
+  config.view = {
     defaultViewEngine: 'nunjucks',
     mapping: {
       '.tpl': 'nunjucks'
     }
   };
 
-  exports.reactssr = {
+  config.reactssr = {
     layout: path.join(app.baseDir, 'app/web/view/layout.html')
   };
 
-  return exports;
+  return config;
 };

@@ -1,0 +1,22 @@
+{
+    "users": [
+        {
+            "userId": 1,
+            "username": "admin",
+            "password": "e10adc3949ba59abbe56e057f20f883e",
+            "identity": "teacher"
+        },
+        {
+            "userId": 2,
+            "username": "user2",
+            "password": "e10adc3949ba59abbe56e057f20f883e",
+            "identity": "student"
+        },
+        {
+            "userId": 3,
+            "username": "user3",
+            "password": "e10adc3949ba59abbe56e057f20f883e",
+            "identity": "admin"
+        }
+    ]
+}

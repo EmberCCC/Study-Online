@@ -1,7 +1,6 @@
 
 'use strict';
 module.exports = app => {
-  app.redirect('/', '/spa');
-  app.get('/spa/login', app.controller.spa.index.login);
-  app.get('/spa(/.*)?', app.controller.spa.index.home);
+  app.get('/', app.controller.spa.home.home);
+  app.post('/api/user/login', app.controller.user.login);
 };
