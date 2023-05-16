@@ -1,21 +1,11 @@
 const { Service } = require('egg');
 const crypto = require('crypto');
-const { Low } = require('lowdb');
-const { JSONFile } = require('lowdb/node')
-const userDBFile = "../db/user.json"
 
 class UserService extends Service {
-    constructor() {
-        super();
-        const adapter = new JSONFile(userDBFile)
-        this.db = new Low(adapter)
-
-    }
 
     async login(username, password) {
-        const { db, ctx } = this;
-        await db.read()
-        const user = db.data.users.find(user => user.username === username)
+        const { ctx } = this;
+        const user = await ctx.db.queryOne('select * from user where username = ?', [username]);
         if (!user) {
             return {
                 success: false,
@@ -40,3 +30,4 @@ class UserService extends Service {
     }
 }
 
+module.exports = UserService;
