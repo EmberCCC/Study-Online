@@ -1,38 +1,37 @@
-const path = require('path');
-const fs = require('fs');
-module.exports = app => {
+const path = require("path");
+const fs = require("fs");
+module.exports = (app) => {
   const exports = {};
 
   exports.siteFile = {
-    '/favicon.ico': fs.readFileSync(path.join(app.baseDir, 'app/web/asset/images/favicon.ico'))
+    "/favicon.ico": fs.readFileSync(
+      path.join(app.baseDir, "app/web/asset/images/favicon.ico")
+    ),
   };
 
   exports.logger = {
-    consoleLevel: 'DEBUG',
-    dir: path.join(app.baseDir, 'logs')
+    consoleLevel: "DEBUG",
+    dir: path.join(app.baseDir, "logs"),
   };
 
   exports.static = {
-    prefix: '/public/',
-    dir: path.join(app.baseDir, 'public')
+    prefix: "/public/",
+    dir: path.join(app.baseDir, "public"),
   };
 
-  exports.keys = '123456';
+  exports.keys = "123456";
 
-  exports.middleware = [
-    'locals',
-    'access'
-  ];
+  exports.middleware = ["locals", "access"];
 
   exports.view = {
-    defaultViewEngine: 'nunjucks',
+    defaultViewEngine: "nunjucks",
     mapping: {
-      '.tpl': 'nunjucks'
-    }
+      ".tpl": "nunjucks",
+    },
   };
 
   exports.reactssr = {
-    layout: path.join(app.baseDir, 'app/web/view/layout.html')
+    layout: path.join(app.baseDir, "app/web/view/layout.html"),
   };
 
   return exports;
