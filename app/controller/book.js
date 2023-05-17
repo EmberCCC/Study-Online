@@ -26,6 +26,24 @@ class BookController extends Controller {
         ctx.body = result;
     }
 
+    async listMyStarBooks() {
+        const { ctx, service } = this;
+        const result = await service.book.listMyStarBooks();
+        ctx.body = result;
+    }
+
+    async star() {
+        const { ctx, service } = this;
+        const result = await service.book.starBook(ctx.params.id);
+        ctx.body = result;
+    }
+
+    async unstar() {
+        const { ctx, service } = this;
+        const result = await service.book.unstarBook(ctx.params.id);
+        ctx.body = result;
+    }
+
 }
 
 module.exports = BookController;

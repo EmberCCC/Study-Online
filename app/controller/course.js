@@ -49,6 +49,25 @@ class CourseController extends Controller {
         ctx.body = result;
     }
 
+    async listMyJoinCourses() {
+        const { ctx } = this;
+        const result = await ctx.service.course.listMyJoinCourse();
+        ctx.body = result;
+    }
+
+    async join() {
+        const { ctx } = this;
+        const result = await ctx.service.course.joinCourse(ctx.params.id);
+        ctx.body = result;
+    }
+
+    async unjoin() {
+        const { ctx } = this;
+        const result = await ctx.service.course.quitCourse(ctx.params.id);
+        ctx.body = result;
+    }
+
+
 }
 
 module.exports = CourseController;
