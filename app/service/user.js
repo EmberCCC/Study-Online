@@ -1,6 +1,5 @@
 const { Service } = require('egg');
 const crypto = require('crypto');
-const { log } = require('console');
 
 class UserService extends Service {
 
@@ -66,7 +65,6 @@ class UserService extends Service {
             "identify": userInfo.identify,
             "profile": userInfo.profile,
         })
-        console.log(result);
         if (result.affectedRows === 1) {
             return {
                 success: true,
