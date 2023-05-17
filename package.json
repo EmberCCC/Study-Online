@@ -19,7 +19,7 @@
     "@ant-design/icons": "^4.0.0",
     "@dicebear/collection": "^6.0.3",
     "@dicebear/core": "^6.0.3",
-    "antd": "^5.4.7",
+    "antd": "^5.5.0",
     "axios": "^0.21.1",
     "babel-register": "^6.26.0",
     "egg": "^2.1.0",
