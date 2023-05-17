@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router';
 import Book from '../component/Book';
 import User from '../component/User';
 import Class from '../component/Class';
-import Layout from '../component/Layout';
+import Layout from '../component/layout';
 import Page404 from '../component/404';
 
 

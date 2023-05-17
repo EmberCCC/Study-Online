@@ -1,7 +1,7 @@
 import React from 'react';
 import { Outlet, useLocation, useNavigate } from 'react-router';
 import IndexHeader from './Header'
-import { Layout, Menu, theme } from 'antd/es';
+import { Layout, Menu, theme } from 'antd';
 const { Header, Content, Sider } = Layout;
 
 const menu = [
