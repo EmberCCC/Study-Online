@@ -275,6 +275,97 @@ class CourseService extends Service {
         }
     }
 
+    async listMyJoinCourse() {
+        const { app, ctx } = this;
+        const userId = ctx.session.userId;
+        if (userId === undefined || userId === null) {
+            return {
+                success: false,
+                message: "请先登录"
+            }
+        }
+        const courses = await app.mysql.query('select * from course where id in (select course_id from user_join_course where user_id = ?)', [userId]);
+        return courses;
+    }
+
+    async joinCourse(courseId) {
+        const { app, ctx } = this;
+        const userId = ctx.session.userId;
+        if (userId === undefined || userId === null) {
+            return {
+                success: false,
+                message: "请先登录"
+            }
+        }
+        const course = await app.mysql.get('course', { "id": courseId });
+        if (!course) {
+            return {
+                success: false,
+                message: "课程不存在"
+            }
+        }
+        const user = await app.mysql.get('user', { "id": userId });
+        if (!user) {
+            return {
+                success: false,
+                message: "用户不存在"
+            }
+        }
+        const result = await app.mysql.insert('user_join_course', {
+            "user_id": userId,
+            "course_id": courseId
+        });
+        if (result.affectedRows === 1) {
+            return {
+                success: true,
+                message: "加入成功"
+            }
+        }
+        return {
+            success: false,
+            message: "加入失败"
+        }
+    }
+
+    async quitCourse(courseId) {
+        const { app, ctx } = this;
+        const userId = ctx.session.userId;
+        if (userId === undefined || userId === null) {
+            return {
+                success: false,
+                message: "请先登录"
+            }
+        }
+        const course = await app.mysql.get('course', { "id": courseId });
+        if (!course) {
+            return {
+                success: false,
+                message: "课程不存在"
+            }
+        }
+        const user = await app.mysql.get('user', { "id": userId });
+        if (!user) {
+            return {
+                success: false,
+                message: "用户不存在"
+            }
+        }
+        const result = await app.mysql.delete('user_join_course', {
+            "user_id": userId,
+            "course_id": courseId
+        });
+        if (result.affectedRows === 1) {
+            return {
+                success: true,
+                message: "退出成功"
+            }
+        }
+        return {
+            success: false,
+            message: "退出失败"
+        }
+    }
+
 }
 
 module.exports = CourseService;
