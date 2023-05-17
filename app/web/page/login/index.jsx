@@ -1,17 +1,16 @@
-import React, { Component } from 'react';
-import './index.css';
-import { Checkbox, Form, Input,Button } from 'antd';
+import React, { Component } from "react";
+import "./index.css";
+import { Checkbox, Form, Input, Button } from "antd";
 
-export default function ListIndex () {
-  
+export default function ListIndex() {
   const onFinish = (values) => {
-    console.log('Success:', values);
+    console.log("Success:", values);
   };
   const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
+    console.log("Failed:", errorInfo);
   };
   return (
-    <div className='w-[600px] mx-auto'>
+    <div className="w-[600px] mx-auto">
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -23,23 +22,26 @@ export default function ListIndex () {
           <Form
             name="basic"
             labelCol={{
-              span: 8
+              span: 8,
             }}
             wrapperCol={{
-              span: 16
+              span: 16,
             }}
             style={{
-              maxWidth: 600
+              maxWidth: 600,
             }}
             initialValues={{
-              remember: true
+              remember: true,
             }}
             onFinish={onFinish}
             onFinishFailed={onFinishFailed}
             autoComplete="off"
           >
             <div>
-              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
                 邮箱
               </label>
               <div className="mt-2">
@@ -48,8 +50,8 @@ export default function ListIndex () {
                   rules={[
                     {
                       required: true,
-                      message: 'Please input your username!'
-                    }
+                      message: "Please input your username!",
+                    },
                   ]}
                 >
                   <Input />
@@ -58,7 +60,10 @@ export default function ListIndex () {
             </div>
             <div>
               <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+                <label
+                  htmlFor="password"
+                  className="block text-sm font-medium leading-6 text-gray-900"
+                >
                   密码
                 </label>
               </div>
@@ -68,34 +73,27 @@ export default function ListIndex () {
                   rules={[
                     {
                       required: true,
-                      message: 'Please input your password!'
-                    }
+                      message: "Please input your password!",
+                    },
                   ]}
                 >
-                  <Input.Password className='w-full'/>
+                  <Input.Password className="w-full" />
                 </Form.Item>
               </div>
             </div>
-            
-
-           
-
-
             <Form.Item
               wrapperCol={{
                 offset: 8,
-                span: 16
+                span: 16,
               }}
             >
               <Button type="primary" htmlType="submit">
-        登陆
+                登陆
               </Button>
             </Form.Item>
           </Form>
         </div>
       </div>
-
     </div>
-  )
-  
+  );
 }

@@ -37,14 +37,13 @@ const Index = () => {
     navigate(item.key)
   }
   return (
-    <Layout className='h-[100vh]'>
+    <Layout className='min-h-[100vh]'>
       <Header
         style={{
           display: 'flex',
           alignItems: 'center'
         }}
       >
-        <div className="demo-logo" />
         <IndexHeader />
       </Header>
       <Layout>

@@ -4,6 +4,7 @@ import Layout from '../component/Layout';
 import Book from '../component/Book';
 import User from '../component/User';
 import Class from '../component/Class';
+import Page404 from '../component/404';
 
 
 export default function Router() {
@@ -13,6 +14,7 @@ export default function Router() {
         <Route element={<User />} path='/' />
         <Route element={<Book />} path='/book' />
         <Route element={<Class />} path='/class' />
+        <Route element={<Page404 />} path='*' />
         {/* <Route element={<Subscribe />} path="/" />
         <Route element={<Account />} path="/account" />
         <Route element={<Install />} path="/install" />

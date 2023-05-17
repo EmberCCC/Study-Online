@@ -1,41 +1,35 @@
 module.exports = {
   env: {
-    node: true,
-    es6: true,
-    mocha: true
+    browser: true,
+    es2021: true
   },
-  parser: 'babel-eslint',
-  extends: 'eslint:recommended',
+  extends: ['plugin:react/recommended'],
+  overrides: [],
   parserOptions: {
-    sourceType: 'module',
-    ecmaVersion: 8,
-    ecmaFeatures: {
-      jsx: true
+    ecmaVersion: 'latest',
+    sourceType: 'module'
+  },
+  settings: {
+    react: {
+      version: 'detect'
     }
   },
+  plugins: ['react', 'prettier', 'react-hooks', 'import'],
   rules: {
-    indent: ['error', 2, { SwitchCase: 1 }],
-    quotes: ['error', 'single'],
-    'new-cap': 'off',
-    'newline-after-var': 'off',
-    'no-unused-vars': 'off',
-    'no-invalid-this': 'off',
-    'guard-for-in': 'off',
-    'no-console': 'off',
-    'no-undefined': 'off',
-    'array-bracket-spacing': 'off',
-    'no-unused-expressions': 'off',
-    'linebreak-style': 'off',
-    'func-style': 'off',
-    'comma-dangle': ['error', 'never']
-  },
-  plugins: ['react'],
-  globals: {
-    window: true,
-    document: true,
-    EASY_ENV_IS_PROD: true,
-    EASY_ENV_IS_NODE: true,
-    EASY_ENV_IS_BROWSER: true,
-    EASY_ENV_IS_DEV: true
+    semi: 1,
+    'react/display-name': 'off',
+    'comma-dangle': 0,
+    'prettier/prettier': 'error',
+    'react/jsx-filename-extension': [2, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
+    camelcase: 'off',
+    'react/react-in-jsx-scope': 'off',
+    'no-var': 0,
+    'react/prop-types': 0,
+    'no-return-await': 0,
+    'prefer-destructuring': [
+      2,
+      { array: false, object: false },
+      { enforceForRenamedProperties: false }
+    ]
   }
 };
