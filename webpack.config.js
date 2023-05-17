@@ -3,6 +3,5 @@
 module.exports = {
   entry: {
     spa: 'app/web/page/spa/index.jsx',
-    login: 'app/web/page/login/index.jsx'
   }
 };

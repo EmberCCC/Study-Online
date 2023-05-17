@@ -6,22 +6,22 @@ const { Header, Content, Sider } = Layout;
 
 const menu = [
   {
-    key: '/',
+    key: '/console',
     // icon: React.createElement(icon),
     label: 'User'
   },
   {
-    key: '/book',
+    key: '/console/book',
     // icon: React.createElement(icon),
     label: 'Book'
   },
   {
-    key: '/class',
+    key: '/console/class',
     // icon: React.createElement(icon),
     label: 'Class'
   },
   {
-    key: '/logout',
+    key: '/console/logout',
     // icon: React.createElement(icon),
     label: 'Logout'
   }
