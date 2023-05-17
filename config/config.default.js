@@ -1,38 +1,71 @@
 const path = require("path");
 const fs = require("fs");
 module.exports = (app) => {
-  const exports = {};
+  const config = {};
 
-  exports.siteFile = {
+  config.session = {
+    key: "EGG_SESS",
+    maxAge: 24 * 3600 * 1000, // 1 天
+    httpOnly: true,
+    encrypt: true,
+    renew: true,
+  };
+
+  config.mysql = {
+    // 单数据库信息配置
+    client: {
+      // host
+      host: "192.168.123.112",
+      // 端口号
+      port: "3307",
+      // 用户名
+      user: "root",
+      // 密码
+      password: "root",
+      // 数据库名
+      database: "study",
+    },
+    // 是否加载到 app 上，默认开启
+    app: true,
+    // 是否加载到 agent 上，默认关闭
+    agent: false,
+  };
+
+  config.siteFile = {
     "/favicon.ico": fs.readFileSync(
       path.join(app.baseDir, "app/web/asset/images/favicon.ico")
     ),
   };
 
-  exports.logger = {
+  config.logger = {
     consoleLevel: "DEBUG",
     dir: path.join(app.baseDir, "logs"),
   };
 
-  exports.static = {
+  config.static = {
     prefix: "/public/",
     dir: path.join(app.baseDir, "public"),
   };
 
-  exports.keys = "123456";
+  config.keys = "123456";
 
-  exports.middleware = ["locals", "access"];
+  config.middleware = ["locals", "access"];
 
-  exports.view = {
+  config.view = {
     defaultViewEngine: "nunjucks",
     mapping: {
       ".tpl": "nunjucks",
     },
   };
 
-  exports.reactssr = {
+  config.reactssr = {
     layout: path.join(app.baseDir, "app/web/view/layout.html"),
   };
+  config.security = {
+    csrf: {
+      enable: false,
+    },
+  };
 
-  return exports;
+  return config;
 };
