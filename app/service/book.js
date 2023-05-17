@@ -116,6 +116,76 @@ class BookService extends Service {
         }
     }
 
+    async listMyStarBooks() {
+        const { app, ctx } = this;
+        if (ctx.session.userId === undefined || ctx.session.userId === null) {
+            return {
+                success: false,
+                message: "请先登录"
+            }
+        }
+
+
+        const userId = ctx.session.userId;
+        const books = await app.mysql.query('select * from book where id in (select book_id from user_star_book where user_id = ?)', [userId]);
+
+        return books;
+    }
+
+    async starBook(bookId) {
+        const { app, ctx } = this;
+        if (ctx.session.userId === undefined || ctx.session.userId === null) {
+            return {
+                success: false,
+                message: "请先登录"
+            }
+        }
+
+        const userId = ctx.session.userId;
+        const result = await app.mysql.insert('user_star_book', {
+            "user_id": userId,
+            "book_id": bookId,
+        });
+
+        if (result.affectedRows === 1) {
+            return {
+                success: true,
+                message: "收藏成功"
+            }
+        }
+        return {
+            success: false,
+            message: "收藏失败"
+        }
+    }
+
+    async unstarBook(bookId) {
+        const { app, ctx } = this;
+        if (ctx.session.userId === undefined || ctx.session.userId === null) {
+            return {
+                success: false,
+                message: "请先登录"
+            }
+        }
+
+        const userId = ctx.session.userId;
+        const result = await app.mysql.delete('user_star_book', {
+            "user_id": userId,
+            "book_id": bookId,
+        });
+
+        if (result.affectedRows === 1) {
+            return {
+                success: true,
+                message: "取消收藏成功"
+            }
+        }
+        return {
+            success: false,
+            message: "取消收藏失败"
+        }
+    }
+
 }
 
 module.exports = BookService;
