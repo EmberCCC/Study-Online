@@ -1,7 +1,7 @@
 'use strict';
 const mm = require('egg-mock');
-const { 
-  webpackReady, 
+const {
+  webpackReady,
   assertCSR,
   assertDevResource
 } = require('../utils/helper');
