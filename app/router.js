@@ -1,7 +1,6 @@
 
 'use strict';
 module.exports = app => {
-  // app.get('/', app.controller.spa.home.home);
   app.post('/api/user/login', app.controller.user.login);
   app.post('/api/user/register', app.controller.user.register);
   app.get('/api/user/list', app.controller.user.list);

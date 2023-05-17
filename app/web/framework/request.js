@@ -11,11 +11,11 @@ export default {
       headers['x-csrf-token'] = locals.csrf;
       headers.Cookie = `csrfToken=${locals.csrf}`;
     }
-    const res = await axios.post(`${locals.origin}${url}`, json, { headers });
+    const res = await axios.post(`${url}`, json, { headers });
     return res.data;
   },
   async get(url, locals = {}) {
-    const res = await axios.get(`${locals.origin}${url}`);
+    const res = await axios.get(`${url}`);
     return res.data;
   }
 };
