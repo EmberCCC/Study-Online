@@ -1,6 +1,6 @@
 import Book from "../component/Book";
 import User from "../component/User";
-import Class from "../component/Class";
+import Course from "../component/Course";
 import Layout from "../component/Layout";
 import Page404 from "../component/404";
 import Login from "../component/Login/login";
@@ -30,11 +30,11 @@ export default [
         component: Book,
       },
       {
-        path: "/console/class",
+        path: "/console/Course",
         meta: {
           isLogin: true,
         },
-        component: Class,
+        component: Course,
       },
       {
         path: "/console/*",
@@ -58,6 +58,13 @@ export default [
       isLogin: false,
     },
     component: Register,
+  },
+  {
+    path: "/",
+    meta: {
+      isLogin: false,
+    },
+    redirect: "/login",
   },
   {
     path: "*",

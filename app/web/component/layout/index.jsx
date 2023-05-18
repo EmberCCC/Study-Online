@@ -17,9 +17,9 @@ const menu = [
     label: "Book",
   },
   {
-    key: "/console/class",
+    key: "/console/Course",
     // icon: React.createElement(icon),
-    label: "Class",
+    label: "Course",
   },
   {
     key: "logout",
