@@ -14,6 +14,24 @@ export default {
     const res = await axios.post(`${url}`, json, { headers });
     return res.data;
   },
+  async put(url, json, locals = {}) {
+    const headers = {};
+    if (EASY_ENV_IS_NODE) {
+      headers['x-csrf-token'] = locals.csrf;
+      headers.Cookie = `csrfToken=${locals.csrf}`;
+    }
+    const res = await axios.put(`${url}`, json, { headers });
+    return res.data;
+  },
+  async delete(url, json, locals = {}) {
+    const headers = {};
+    if (EASY_ENV_IS_NODE) {
+      headers['x-csrf-token'] = locals.csrf;
+      headers.Cookie = `csrfToken=${locals.csrf}`;
+    }
+    const res = await axios.delete(`${url}`, json, { headers });
+    return res.data;
+  },
   async get(url, locals = {}) {
     const res = await axios.get(`${url}`);
     return res.data;

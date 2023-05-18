@@ -6,6 +6,7 @@ module.exports = app => {
   app.get('/api/user/list', app.controller.user.list);
   app.delete('/api/user/delete/:id', app.controller.user.delete);
   app.put('/api/user/update', app.controller.user.update);
+  app.get('/api/user/self',app.controller.user.self);
 
 
   app.get('/api/course/list', app.controller.course.list);

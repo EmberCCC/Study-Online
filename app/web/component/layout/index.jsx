@@ -1,47 +1,52 @@
-import React from 'react';
-import { Outlet, useLocation, useNavigate } from 'react-router';
-import IndexHeader from './Header'
-import { Layout, Menu, theme } from 'antd/es';
+import React from "react";
+import { Outlet, useLocation, useNavigate } from "react-router";
+import IndexHeader from "./Header";
+import { Layout, Menu, theme } from "antd/es";
 const { Header, Content, Sider } = Layout;
+import services from "../../framework/request";
 
 const menu = [
   {
-    key: '/console',
+    key: "/console",
     // icon: React.createElement(icon),
-    label: 'User'
+    label: "User",
   },
   {
-    key: '/console/book',
+    key: "/console/book",
     // icon: React.createElement(icon),
-    label: 'Book'
+    label: "Book",
   },
   {
-    key: '/console/class',
+    key: "/console/Course",
     // icon: React.createElement(icon),
-    label: 'Class'
+    label: "Course",
   },
   {
-    key: '/console/logout',
+    key: "logout",
     // icon: React.createElement(icon),
-    label: 'Logout'
-  }
-]
+    label: "Logout",
+  },
+];
 
 const Index = () => {
   const {
-    token: { colorBgContainer }
+    token: { colorBgContainer },
   } = theme.useToken();
   const location = useLocation();
   const navigate = useNavigate();
   const handleClick = (item) => {
-    navigate(item.key)
-  }
+    if (item.key === "logout") {
+      navigate("/login");
+    } else {
+      navigate(item.key);
+    }
+  };
   return (
-    <Layout className='min-h-[100vh]'>
+    <Layout className="min-h-[100vh]">
       <Header
         style={{
-          display: 'flex',
-          alignItems: 'center'
+          display: "flex",
+          alignItems: "center",
         }}
       >
         <IndexHeader />
@@ -50,29 +55,27 @@ const Index = () => {
         <Sider
           width={200}
           style={{
-            background: colorBgContainer
+            background: colorBgContainer,
           }}
         >
           <Menu
             mode="inline"
             selectedKeys={location.pathname}
             style={{
-              height: '100%',
-              borderRight: 0
+              height: "100%",
+              borderRight: 0,
             }}
             onClick={handleClick}
             items={menu}
           />
         </Sider>
-        <Layout
-          className='p-10'
-        >
+        <Layout className="p-10">
           <Content
             style={{
               padding: 24,
               margin: 0,
               minHeight: 280,
-              background: colorBgContainer
+              background: colorBgContainer,
             }}
           >
             <Outlet />
