@@ -141,6 +141,18 @@ class BookService extends Service {
             }
         }
 
+
+        //query book is exist
+        const book = await app.mysql.get('book', { "id": bookId });
+        if (book === null) {
+            return {
+                success: false,
+                message: "书籍不存在"
+            }
+        }
+
+
+
         const userId = ctx.session.userId;
         const result = await app.mysql.insert('user_star_book', {
             "user_id": userId,
