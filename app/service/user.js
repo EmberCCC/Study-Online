@@ -92,6 +92,21 @@ class UserService extends Service {
         }
     }
 
+    async deleteByUserName(username) {
+        const { app } = this;
+        const result = await app.mysql.delete('user', { "username": username });
+        if (result.affectedRows === 1) {
+            return {
+                success: true,
+                message: "删除成功"
+            }
+        }
+        return {
+            success: false,
+            message: "删除失败"
+        }
+    }
+
     async update(userInfo) {
         const { app, ctx } = this;
         const result = await app.mysql.update('user', {
