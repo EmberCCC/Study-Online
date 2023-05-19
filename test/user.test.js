@@ -119,8 +119,7 @@ describe('user', () => {
     describe('star book', () => {
 
         let userInfo = {
-            username: 'student',
-            password: '123456',
+            userId: 2
         }
         let bookInfo = {
             id: 1
@@ -128,14 +127,7 @@ describe('user', () => {
 
         it('Collect books after user login', async () => {
             let user = JSON.parse(JSON.stringify(userInfo));
-            await app.httpRequest()
-                .post('/api/user/login')
-                .send(user)
-                .expect(200)
-                .expect({
-                    success: true,
-                    message: "登录成功"
-                });
+            app.mockSession(user)
             let book = JSON.parse(JSON.stringify(bookInfo));
             await app.httpRequest()
                 .post('/api/book/star/' + book.id)
@@ -156,14 +148,8 @@ describe('user', () => {
 
         it('View your started books', async () => {
             let user = JSON.parse(JSON.stringify(userInfo));
-            await app.httpRequest()
-                .post('/api/user/login')
-                .send(user)
-                .expect(200)
-                .expect({
-                    success: true,
-                    message: "登录成功"
-                });
+            app.mockSession(user)
+
             await app.httpRequest()
                 .get('/api/book/listMyStarBooks')
                 .expect(200)
@@ -182,14 +168,7 @@ describe('user', () => {
 
         it('book not exist', async () => {
             let user = JSON.parse(JSON.stringify(userInfo));
-            await app.httpRequest()
-                .post('/api/user/login')
-                .send(user)
-                .expect(200)
-                .expect({
-                    success: true,
-                    message: "登录成功"
-                });
+            app.mockSession(user)
             let book = JSON.parse(JSON.stringify(bookInfo));
             book.id = 100
             await app.httpRequest()
@@ -205,8 +184,7 @@ describe('user', () => {
 
     describe('join course', () => {
         let userInfo = {
-            username: 'student',
-            password: '123456',
+            userId: 2
         }
         let courseInfo = {
             id: 1
@@ -214,14 +192,7 @@ describe('user', () => {
 
         it('Join course after user login', async () => {
             let user = JSON.parse(JSON.stringify(userInfo));
-            await app.httpRequest()
-                .post('/api/user/login')
-                .send(user)
-                .expect(200)
-                .expect({
-                    success: true,
-                    message: "登录成功"
-                });
+            app.mockSession(user)
             let course = JSON.parse(JSON.stringify(courseInfo));
             await app.httpRequest()
                 .post('/api/course/join/' + course.id)
@@ -241,14 +212,7 @@ describe('user', () => {
 
         it('View your joined courses', async () => {
             let user = JSON.parse(JSON.stringify(userInfo));
-            await app.httpRequest()
-                .post('/api/user/login')
-                .send(user)
-                .expect(200)
-                .expect({
-                    success: true,
-                    message: "登录成功"
-                });
+            app.mockSession(user)
             await app.httpRequest()
                 .get('/api/course/listMyJoinCourses')
                 .expect(200)
@@ -267,14 +231,7 @@ describe('user', () => {
 
         it('course not exist', async () => {
             let user = JSON.parse(JSON.stringify(userInfo));
-            await app.httpRequest()
-                .post('/api/user/login')
-                .send(user)
-                .expect(200)
-                .expect({
-                    success: true,
-                    message: "登录成功"
-                });
+            app.mockSession(user)
             let course = JSON.parse(JSON.stringify(courseInfo));
             course.id = 100
             await app.httpRequest()
@@ -290,20 +247,12 @@ describe('user', () => {
 
     describe('manage', () => {
         let userInfo = {
-            username: 'admin',
-            password: '123456',
+            userId: 1
         }
 
         it('list all users', async () => {
             let user = JSON.parse(JSON.stringify(userInfo));
-            await app.httpRequest()
-                .post('/api/user/login')
-                .send(user)
-                .expect(200)
-                .expect({
-                    success: true,
-                    message: "登录成功"
-                });
+            app.mockSession(user)
             await app.httpRequest()
                 .get('/api/user/list')
                 .expect(200)
@@ -311,20 +260,13 @@ describe('user', () => {
 
         it('add user', async () => {
             let user = JSON.parse(JSON.stringify(userInfo));
+            app.mockSession(user)
             let newUser = {
                 username: 'newuser',
                 password: '123456',
                 identify: 'student',
                 profile: '{}'
             }
-            await app.httpRequest()
-                .post('/api/user/login')
-                .send(user)
-                .expect(200)
-                .expect({
-                    success: true,
-                    message: "登录成功"
-                });
 
             await app.httpRequest()
                 .post('/api/user/register')
@@ -340,15 +282,7 @@ describe('user', () => {
 
         it('update user', async () => {
             let user = JSON.parse(JSON.stringify(userInfo));
-
-            await app.httpRequest()
-                .post('/api/user/login')
-                .send(user)
-                .expect(200)
-                .expect({
-                    success: true,
-                    message: "登录成功"
-                });
+            app.mockSession(user)
 
             let updateUser = {
                 id: 1,
@@ -396,15 +330,7 @@ describe('user', () => {
                 });
             const newUserResult = await app.mysql.get('user', { username: newUser.username })
             let user = JSON.parse(JSON.stringify(userInfo));
-
-            await app.httpRequest()
-                .post('/api/user/login')
-                .send(user)
-                .expect(200)
-                .expect({
-                    success: true,
-                    message: "登录成功"
-                });
+            app.mockSession(user)
 
             await app.httpRequest()
                 .delete('/api/user/delete/' + newUserResult.id)
@@ -428,15 +354,8 @@ describe('user', () => {
 
         it('if user not admin', async () => {
             let user = JSON.parse(JSON.stringify(userInfo));
-            user.username = 'student'
-            await app.httpRequest()
-                .post('/api/user/login')
-                .send(user)
-                .expect(200)
-                .expect({
-                    success: true,
-                    message: "登录成功"
-                });
+            user.userId = 2
+            app.mockSession(user)
             await app.httpRequest()
                 .delete('/api/user/delete/999')
                 .expect(200)

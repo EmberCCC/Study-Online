@@ -32,6 +32,7 @@ class BookService extends Service {
             "type": bookInfo.type,
             "word_count": bookInfo.word_count,
             "logo": bookInfo.logo,
+            "profile": bookInfo.profile,
         })
 
         if (result.affectedRows === 1) {
@@ -102,6 +103,7 @@ class BookService extends Service {
             "type": bookInfo.type,
             "word_count": bookInfo.word_count,
             "logo": bookInfo.logo,
+            "profile": bookInfo.profile,
         });
 
         if (result.affectedRows === 1) {
