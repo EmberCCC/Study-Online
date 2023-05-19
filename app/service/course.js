@@ -93,7 +93,7 @@ class CourseService extends Service {
                 message: "请先登录"
             }
         }
-        const course = app.mysql.get('course', { "id": courseInfo.courseInfo.id });
+        const course = app.mysql.get('course', { "id": courseInfo.id });
         if (!course) {
             return {
                 success: false,
