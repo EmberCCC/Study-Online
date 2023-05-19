@@ -15,13 +15,13 @@ module.exports = (app) => {
     // 单数据库信息配置
     client: {
       // host
-      host: "192.168.123.112",
+      host: "database-1.cny3yynkfqmk.ap-northeast-1.rds.amazonaws.com",
       // 端口号
-      port: "3307",
+      port: "3306",
       // 用户名
       user: "root",
       // 密码
-      password: "root",
+      password: "f54>8KP:LpoGLcDUyd$Iu%MsJ{1G",
       // 数据库名
       database: "study",
     },
