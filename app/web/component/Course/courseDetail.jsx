@@ -5,39 +5,35 @@ import {
   Drawer,
   Form,
   Input,
-  InputNumber,
   Modal,
+  Select,
   Space,
   message,
 } from "antd";
 import dayjs from "dayjs";
 import services from "../../framework/request";
 
-const BookDetail = ({ info, open, onClose, getBook }) => {
+const CourseDetail = ({ info, open, onClose, user, getUser, getCourse }) => {
   const [form] = Form.useForm();
   const [edit, setEdit] = useState(false);
-  const { name, author, id, type, desc, word_count, profile } = info;
-
-  const { publish_time, click, collect } = JSON.parse(profile ?? "{}");
+  const { name, start_time, id, teacher_desc, teacher_id } = info;
+  const teacherList = user.filter((item) => item.identify === "teacher");
   const handleEdit = () => {
     if (edit) {
       form
         .validateFields()
         .then(async (data) => {
           const param = {
-            id: id,
+            id: data.id,
             name: data.name,
-            author: data.author,
-            desc: data.desc,
-            type: data.type,
-            word_count: data.word_count,
-            profile: JSON.stringify({
-              click: click,
-              collect: collect,
-              publish_time: dayjs(data.publish_time).format("x"),
-            }),
+            start_time: dayjs(data.start_time),
+            teacher_desc: data.teacher_desc,
+            teacher_id: data.teacher_id,
+            detail: data.detail,
+            profile: "{}",
           };
-          const res = await services.put("/api/book/update", param);
+          console.log(param);
+          const res = await services.put("/api/course/update", param);
           if (res.success) {
             message.success(res.message);
           } else {
@@ -46,8 +42,9 @@ const BookDetail = ({ info, open, onClose, getBook }) => {
           }
         })
         .catch((err) => message.error(err))
-        .finally(() => {
-          getBook();
+        .finally(async () => {
+          await getUser();
+          getCourse();
           setEdit(false);
           onClose();
         });
@@ -61,14 +58,14 @@ const BookDetail = ({ info, open, onClose, getBook }) => {
       setEdit(false);
     } else {
       Modal.confirm({
-        title: "删除图书",
-        content: "你确定删除该吗，操作无法取消",
+        title: "删除课程",
+        content: "你确定删除该课程吗，操作无法取消",
         okText: "确定",
         cancelText: "取消",
         okType: "danger",
         onOk: async () => {
           try {
-            const res = await services.delete(`/api/book/delete/${id}`);
+            const res = await services.delete(`/api/course/delete/${id}`);
             if (res.success) {
               message.success(res.message);
             } else {
@@ -78,7 +75,8 @@ const BookDetail = ({ info, open, onClose, getBook }) => {
             message.error(error);
           } finally {
             form.resetFields();
-            getBook();
+            await getUser();
+            getCourse();
             onClose();
           }
         },
@@ -115,9 +113,21 @@ const BookDetail = ({ info, open, onClose, getBook }) => {
           ]}
           initialValue={id}
           name={"id"}
-          label={"书号"}
+          label={"课程ID"}
         >
           <Input disabled={true} />
+        </Form.Item>
+        <Form.Item
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+          initialValue={name}
+          name={"name"}
+          label={"课程名"}
+        >
+          <Input />
         </Form.Item>
         <Form.Item
           initialValue={name}
@@ -126,27 +136,43 @@ const BookDetail = ({ info, open, onClose, getBook }) => {
               required: true,
             },
           ]}
-          name={"name"}
-          label={"书名"}
+          name={"detail"}
+          label={"课程详情"}
         >
           <Input />
         </Form.Item>
         <Form.Item
-          initialValue={author}
+          initialValue={teacher_id}
           rules={[
             {
               required: true,
             },
           ]}
-          name={"author"}
-          label={"作者"}
+          name={"teacher_id"}
+          label={"教师名"}
+        >
+          <Select
+            options={teacherList.map((item) => {
+              return { value: item.id, label: item.username };
+            })}
+          />
+        </Form.Item>
+        <Form.Item
+          initialValue={teacher_desc}
+          rules={[
+            {
+              required: true,
+            },
+          ]}
+          name={"teacher_desc"}
+          label={"教师描述"}
         >
           <Input />
         </Form.Item>
         <Form.Item
-          initialValue={dayjs(Number(publish_time))}
-          name={"publish_time"}
-          label={"出版日期"}
+          initialValue={dayjs(Number(start_time))}
+          name={"start_time"}
+          label={"开课时间"}
           rules={[
             {
               required: true,
@@ -155,31 +181,9 @@ const BookDetail = ({ info, open, onClose, getBook }) => {
         >
           <DatePicker />
         </Form.Item>
-        <Form.Item
-          initialValue={word_count}
-          name={"word_count"}
-          label={"总字数"}
-        >
-          <InputNumber />
-        </Form.Item>
-        <Form.Item
-          initialValue={type}
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-          name={"type"}
-          label={"类别"}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item initialValue={desc} name={"desc"} label={"内容介绍"}>
-          <Input.TextArea />
-        </Form.Item>
       </Form>
     </Drawer>
   );
 };
 
-export default BookDetail;
+export default CourseDetail;

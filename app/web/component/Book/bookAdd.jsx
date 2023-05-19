@@ -36,13 +36,13 @@ const BookAdd = ({ open, onClose, getBook }) => {
         if (res.success) {
           message.success(res.message);
         } else {
-          message.warning(res.message);
+          message.warning("添加失败");
           form.resetFields();
         }
         getBook();
         onClose();
       })
-      .catch((err) => message.error(err));
+      .catch((err) => message.error("网络异常"));
   };
   return (
     <Drawer

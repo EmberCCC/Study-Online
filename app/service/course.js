@@ -38,7 +38,7 @@ class CourseService extends Service {
 
         const result = await app.mysql.insert('course', {
             "name": courseInfo.name,
-            "detail": courseInfo.detail,
+            "details": courseInfo.detail,
             "teacher_desc": courseInfo.teacher_desc,
             "teacher_id": courseInfo.teacher_id,
             "start_time": timestamp,
@@ -100,7 +100,7 @@ class CourseService extends Service {
                 message: "请先登录"
             }
         }
-        const course = app.mysql.get('course', { "id": id });
+        const course = app.mysql.get('course', { "id": courseInfo.id });
         if (!course) {
             return {
                 success: false,
@@ -114,10 +114,11 @@ class CourseService extends Service {
                 message: "权限不足"
             }
         }
-
+        console.log(courseInfo);
         const result = await app.mysql.update('course', {
+            "id":courseInfo.id,
             "name": courseInfo.name,
-            "detail": courseInfo.detail,
+            "details": courseInfo.detail,
             "teacher_desc": courseInfo.teacher_desc,
             "teacher_id": courseInfo.teacher_id,
             "start_time": courseInfo.start_time,
