@@ -19,9 +19,16 @@ class UserService extends Service {
         if (pwd !== target) {
             return {
                 success: false,
-                message: "密码错误"
+                message: "用户名或密码错误"
             }
         }
+        if (user.status === 2) {
+            return {
+                success: false,
+                message: "用户已被禁用"
+            }
+        }
+
         ctx.session.userId = user.id;
         return {
             success: true,
@@ -31,7 +38,12 @@ class UserService extends Service {
 
     async list() {
         const { app, ctx } = this;
+
+
+
         const userId = ctx.session.userId;
+
+
         const user = await app.mysql.get('user', { "id": userId });
         // if (!user && user.identify !== "admin") {
         //     return {
@@ -59,6 +71,15 @@ class UserService extends Service {
 
         const md5 = crypto.createHash('md5');
 
+        // password must be longer than 6 characters
+        if (userInfo.password.length < 6) {
+            return {
+                success: false,
+                message: "密码长度不能小于6位"
+            }
+        }
+
+
         const result = await app.mysql.insert('user', {
             "username": userInfo.username,
             "password": md5.update(userInfo.password).digest('hex'),
@@ -79,7 +100,37 @@ class UserService extends Service {
 
     async delete(id) {
         const { app, ctx } = this;
+        // only admin can delete user
+        if (ctx.session.userId === undefined || ctx.session.userId === null) {
+            return {
+                success: false,
+                message: "请先登录"
+            }
+        }
+        const user = await app.mysql.get('user', { "id": ctx.session.userId });
+        if (user.identify !== 'admin') {
+            return {
+                success: false,
+                message: "权限不足"
+            }
+        }
+
         const result = await app.mysql.delete('user', { "id": id });
+        if (result.affectedRows === 1) {
+            return {
+                success: true,
+                message: "删除成功"
+            }
+        }
+        return {
+            success: false,
+            message: "删除失败"
+        }
+    }
+
+    async deleteByUserName(username) {
+        const { app } = this;
+        const result = await app.mysql.delete('user', { "username": username });
         if (result.affectedRows === 1) {
             return {
                 success: true,
@@ -94,10 +145,13 @@ class UserService extends Service {
 
     async update(userInfo) {
         const { app, ctx } = this;
+
+        const md5 = crypto.createHash('md5');
+
         const result = await app.mysql.update('user', {
             "id": userInfo.id,
             "username": userInfo.username,
-            "password": userInfo.password,
+            "password": md5.update(userInfo.password).digest('hex'),
             "identify": userInfo.identify,
             "profile": userInfo.profile,
         });

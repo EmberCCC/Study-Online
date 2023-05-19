@@ -4,6 +4,7 @@ import IndexHeader from "./Header";
 import { Layout, Menu, theme } from "antd/es";
 const { Header, Content, Sider } = Layout;
 import services from "../../framework/request";
+import { clearCookie } from "../../util/dataTool";
 
 const menu = [
   {
@@ -36,6 +37,8 @@ const Index = () => {
   const navigate = useNavigate();
   const handleClick = (item) => {
     if (item.key === "logout") {
+      clearCookie("EGG_SESS");
+      clearCookie("EGG_SESS.sig");
       navigate("/login");
     } else {
       navigate(item.key);
