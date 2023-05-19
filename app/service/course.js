@@ -107,7 +107,6 @@ class CourseService extends Service {
                 message: "权限不足"
             }
         }
-        console.log(courseInfo);
         const result = await app.mysql.update('course', {
             "id": courseInfo.id,
             "name": courseInfo.name,

@@ -15,16 +15,18 @@ import services from "../../framework/request";
 const CourseAdd = ({ open, onClose, user, getUser, getCourse }) => {
   const [form] = Form.useForm();
   const teacherList = user.filter((item) => item.identify === "teacher");
-  const handleAdd = async () => {
-    form.validateFields().then(async (res) => {
+  const handleAdd = () => {
+    console.log(1);
+    form.validateFields().then(async (data) => {
       try {
         const param = {
-          name: res.name,
-          details: res.detail,
-          teacher_desc: res.teacher_desc,
-          teacher_id: res.teacher_id,
-          start_time: res.start_time,
+          name: data.name,
+          details: data.detail,
+          teacher_desc: data.teacher_desc,
+          teacher_id: data.teacher_id,
+          start_time: data.start_time,
         };
+        console.log(param);
         const res = await services.post("/api/course/add", param);
         if (res.success) {
           message.success("添加成功");
